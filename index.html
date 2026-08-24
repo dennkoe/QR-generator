@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QR-Code Generator</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+*{box-sizing:border-box;font-family:Segoe UI,Arial,sans-serif}body{background:#f4f6f8;display:flex;justify-content:center;padding:20px}.container{background:#fff;width:100%;max-width:500px;padding:25px;border-radius:12px;box-shadow:0 5px 15px rgba(0,0,0,.1)}h1{text-align:center;color:#003366}label{display:block;margin:12px 0 6px;font-weight:600}input{width:100%;padding:12px;border:1px solid #ccc;border-radius:8px}button{width:100%;padding:12px;margin-top:15px;background:#003366;color:#fff;border:none;border-radius:8px;cursor:pointer}#qrcode{display:flex;justify-content:center;margin-top:25px}#spruch{
+    text-align:center;
+    color:#003366;
+    font-weight:600;
+    margin:10px 0 20px 0;
+}
+
+#downloadBtn{display:none}footer{text-align:center;margin-top:20px;color:#777;font-size:12px}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>🔳 QR-Code Generator</h1>
+<div id="spruch"></div>
+<label>Link</label>
+<input id="link" type="url" placeholder="https://...">
+<label>Dateiname (optional)</label>
+<input id="filename" type="text" placeholder="z.B. Lass dich nicht aufhalten!">
+<button onclick="generateQR()">QR-Code erstellen</button>
+<div id="qrcode"></div>
+<button id="downloadBtn" onclick="downloadQR()">PNG herunterladen</button>
+<footer>© LAB Leipziger Aus- und Weiterbildungsbetriebe GmbH</footer>
+</div>
+<script>
+const sprueche = [
+    "🚋 Nächster Halt: Digitalisierung.",
+    "🚋 Signal auf F1.",
+    "🚋 Bitte hinter dem QR-Code zurückbleiben.",
+    "🚋 Bereit zur Abfahrt.",
+    "🚋 Dieser QR-Code fährt pünktlich ab.",
+    "🚋 Heute schon einen QR-Code erzeugt?",
+    "🚋 Kein Papier wurde verletzt.",
+    "🚋 Die Fahrschule Straßenbahn empfiehlt: Scannen.",
+    "🚋 Frisch generierte Pixel.",
+    "🚋 Keine Störung vorhanden.",
+    "🚋 Made in Leipzig.",
+    "🚋 QR-Code statt Zettelwirtschaft.",
+    "🚋 Stromabnehmer angelegt.",
+    "🚋 Kein Zwangsschließen!",
+    "🚋 Fahrgastinformation für Fahrlehrer.",
+    "🚋 Da müssen wir wohl den BeDi anrufen.",
+    "🚋 Es wird nicht gerannt!",
+    "🚋 Lass dich nicht aufhalten!"
+];
+
+document.getElementById("spruch").textContent =
+    sprueche[Math.floor(Math.random() * sprueche.length)];
+function generateQR(){const link=document.getElementById('link').value.trim();if(!link){alert('Bitte einen Link eingeben.');return;}const c=document.getElementById('qrcode');c.innerHTML='';new QRCode(c,{text:link,width:300,height:300});document.getElementById('downloadBtn').style.display='block';}
+function downloadQR(){const img=document.querySelector('#qrcode img');if(!img){alert('Bitte zuerst einen QR-Code erstellen.');return;}let filename=document.getElementById('filename').value.trim()||'qr-code';const a=document.createElement('a');a.href=img.src;a.download=filename+'.png';a.click();}
+</script>
+</body>
+</html>
